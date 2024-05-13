@@ -38,7 +38,7 @@ public class Player extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(manager.get("bird.png", Texture.class), getX(), getY());
+        batch.draw(manager.get("birdnormal.png", Texture.class), getX(), getY());
     }
     public Rectangle getBounds() {
         return bounds;
