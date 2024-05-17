@@ -5,12 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Timer;
 
 public class Player extends Actor {
     Rectangle bounds;
     AssetManager manager;
 
     float speedy, gravity;
+    boolean pilled;
+
     Player()
     {
         setX(200);
@@ -38,13 +41,31 @@ public class Player extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(manager.get("birdnormal.png", Texture.class), getX(), getY());
+        if (pilled) {
+            batch.draw(manager.get("bird.png", Texture.class), getX(), getY());
+        } else {
+            batch.draw(manager.get("birdnormal.png", Texture.class), getX(), getY());
+        }
     }
+    public boolean isPilled() {
+        return pilled;
+    }
+
+    public void setPilled(boolean pilled) {
+        this.pilled = pilled;
+    }
+
     public Rectangle getBounds() {
         return bounds;
     }
     public void setManager(AssetManager manager) {
         this.manager = manager;
     }
+
+    public void detenerParpadeo() {
+        // Detener el parpadeo del jugador
+        setVisible(true);
+    }
+
 }
 

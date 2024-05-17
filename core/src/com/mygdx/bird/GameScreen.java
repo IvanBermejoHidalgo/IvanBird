@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
 
     private long powerUpPickupTime;
 
-
+    private boolean pilled;
 
     public GameScreen(Bird game) {
         this.game = game;
@@ -214,14 +214,17 @@ public class GameScreen implements Screen {
             powerUp.remove(); // Elimina el power-up de la pantalla
             powerUp = null; // Establece el power-up a null para indicar que ya no está presente
             poderes = true;
+            player.setPilled(true); // Establecer el estado de "pilled" del jugador como verdadero
             powerUpPickupTime = TimeUtils.nanoTime(); // Guardar el tiempo de recogida de la pastilla
+            // Llamar al método de parpadeo del jugador
         }
 
         // Verificar si han pasado más de 5 segundos desde que se recogió la pastilla
         if (poderes && TimeUtils.timeSinceNanos(powerUpPickupTime) > 3000000000L) {
             poderes = false; // Desactivar los poderes después de 5 segundos
+            player.setPilled(false); // Establecer el estado de "pilled" del jugador como falso
+            player.detenerParpadeo(); // Detener el parpadeo del jugador
         }
-
         if (dead) {
             game.manager.get("fail.wav", Sound.class).play();
             game.lastScore = (int) puntuacion;
@@ -257,6 +260,8 @@ public class GameScreen implements Screen {
         game.batch.end();
 
     }
+
+
 
     private void aumentarVelocidad() {
         // Aumenta la velocidad actual de las tuberías
